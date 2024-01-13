@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    environment:
+      - ENVKEY=DEV
+  redis:
+    image: "redis:${REDIS_TAG}"

@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    environment:
+      - ENVKEY=DEV
+    secrets:
+      - app_secret
+  redis:
+    image: "redis:${REDIS_TAG}"
+secrets:
+  app_secret:
+    file: ./secret.txt

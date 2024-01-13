@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    environment:
+      - ENVKEY=DEV
+    secrets:
+      - app_secret
+    profiles: [webapp]
+    depends_on:
+      - redis
+    develop:
+      watch:
+        - action: rebuild 
+          path: server.py
+        - action: sync 
+          path: ./secret.txt
+          target: /run/secrets/app_secret
+  redis:
+    image: "redis:${REDIS_TAG}"
+    profiles: [webapp, api]
+  api:
+    image: "node:21-alpine3.18"
+    profiles: [api]
+secrets:
+  app_secret:
+    file: ./secret.txt
