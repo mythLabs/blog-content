@@ -1,0 +1,22 @@
+# Use Alpine as the base image
+FROM alpine:latest
+
+# Install necessary packages
+RUN apk update && apk add --no-cache \
+    iproute2  \    
+    net-tools \     
+    iputils \             
+    traceroute \                      
+    lsof \                
+    tcpdump \             
+    curl \                
+    wget  \          
+    busybox-extras \      
+    netcat-openbsd \      
+    nmap \                
+    bind-tools \          
+    iperf3 \              
+    iptables
+
+# Default command
+CMD ["sh"]
