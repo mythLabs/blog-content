@@ -1,0 +1,9 @@
+[Unit]
+Description=Custom Shell Logger Service
+
+[Service]
+ExecStart=/home/amit/personal/blog-content/mastering-linux-services/log_message.sh
+User=amit
+
+[Install]
+WantedBy=multi-user.target
