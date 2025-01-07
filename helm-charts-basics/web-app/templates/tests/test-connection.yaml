@@ -4,7 +4,7 @@ metadata:
   name: "{{ include "web-app.fullname" . }}-test-connection"
   labels:
     {{- include "web-app.labels" . | nindent 4 }}
-  annotations:
+  annotations: 
     "helm.sh/hook": test
 spec:
   containers:
