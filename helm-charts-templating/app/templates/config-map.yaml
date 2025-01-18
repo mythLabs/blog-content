@@ -1,0 +1,26 @@
+{{- $serviceName := .Release.Name }}
+{{- $fullName := printf "%s-%s" .Release.Name .Chart.Name }}
+{{- $isProd := eq .Values.environment "production" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  namespace: {{ .Release.Namespace }}
+data:
+  app_version: {{ .Chart.Version }}
+  cluster_version: {{ .Capabilities.KubeVersion.Version }}
+  service_name: {{ $serviceName }}
+  full_name: {{ $fullName }}
+  {{- if $isProd }}
+  priority: Highest
+  {{- else  }}
+  priority: Low
+  {{- end }}
+  {{- range $key, $value := .Values.config.data }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  redis-password: {{ .Values.redis.auth.password }}
+  key: |-
+    {{ print "The value of myVar is: " .Values.myVar }}
+
+

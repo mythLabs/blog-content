@@ -1,0 +1,12 @@
+config:
+  config-name: "app-config"
+  data:
+    key1: "value1"
+    key2: "value2"
+
+environment: "dev"
+
+redis:
+  enabled: false
+  auth:
+    password: "securepassword"

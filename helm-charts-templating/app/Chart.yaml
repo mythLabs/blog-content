@@ -1,0 +1,8 @@
+name: app
+namespace: default
+description: A basic nginx deployment
+version: 0.1.0
+dependencies:
+  - name: redis
+    version: "20.6.3"
+    repository: "https://charts.bitnami.com/bitnami"
