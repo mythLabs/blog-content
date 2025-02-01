@@ -23,25 +23,22 @@ type DeploySyncerReconciler struct {
 func (r *DeploySyncerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
     
     deploySyncer := &deploysyncerv1alpha1.DeploySyncer{}
-    if err := r.Get(ctx, req.Namespace, deploySyncer); err != nil {
+    if err := r.Get(ctx, req.NamespacedName, deploySyncer); err != nil {
         return ctrl.Result{}, client.IgnoreNotFound(err)
     }
 
     // Validate fields
-    if deploySyncer.Spec.RepoURL == "" || deploySyncer.Spec.Branch == "" {
-        deploySyncer.Status.LastStatus = "Missing required fields"
+    if deploySyncer.Spec.RawFileUrl == ""  {
+        deploySyncer.Status.LastStatus = "Missing file url"
         r.Status().Update(ctx, deploySyncer)
-        return ctrl.Result{}, fmt.Errorf("required fields missing")
+        return ctrl.Result{}, fmt.Errorf("Missing file url")
     }
 
     // Setup GitHub client
     rustyClient := resty.New()
-    deploymentURL := fmt.Sprintf("%s/%s/kubernetes-operator-app/deployments.yaml", 
-        deploySyncer.Spec.RepoURL,
-        deploySyncer.Spec.Branch)
 
     // Fetch deployment
-    resp, err := rustyClient.R().Get(deploymentURL)
+    resp, err := rustyClient.R().Get(deploySyncer.Spec.RepoURL)
     if err != nil {
         deploySyncer.Status.LastStatus = fmt.Sprintf("Failed to fetch: %v", err)
         r.Status().Update(ctx, deploySyncer)
@@ -57,15 +54,27 @@ func (r *DeploySyncerReconciler) Reconcile(ctx context.Context, req ctrl.Request
     }
 
     // Apply deployment
-    if err := r.Create(ctx, deployment); err != nil {
-        if client.IgnoreAlreadyExists(err) != nil {
-            if err := r.Update(ctx, deployment); err != nil {
-                deploySyncer.Status.LastStatus = "Failed to update deployment"
-                r.Status().Update(ctx, deploySyncer)
-                return ctrl.Result{}, err
-            }
-        }
-    }
+	err = r.Get(ctx, client.ObjectKey{Name: deployment.Name, Namespace: deployment.Namespace}, deployment)
+	if err != nil && client.IgnoreNotFound(err) == nil {
+		// Deployment doesn't exist, create a new one
+		if err := r.Create(ctx, deployment); err != nil {
+			deploySyncer.Status.LastStatus = fmt.Sprintf("Failed to create deployment: %v", err)
+			r.Status().Update(ctx, deploySyncer)
+			return ctrl.Result{}, err
+		}
+	} else if err == nil {
+		// Deployment exists, update it
+		if err := r.Update(ctx, deployment); err != nil {
+			deploySyncer.Status.LastStatus = fmt.Sprintf("Failed to update deployment: %v", err)
+			r.Status().Update(ctx, deploySyncer)
+			return ctrl.Result{}, err
+		}
+	} else {
+		// Handle error when fetching the deployment
+		deploySyncer.Status.LastStatus = fmt.Sprintf("Failed to fetch deployment: %v", err)
+		r.Status().Update(ctx, deploySyncer)
+		return ctrl.Result{}, err
+	}
 
     // Update status
     deploySyncer.Status.LastStatus = "Success"

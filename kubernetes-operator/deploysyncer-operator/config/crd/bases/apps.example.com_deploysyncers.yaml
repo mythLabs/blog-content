@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.0
-  name: deploysyncers.deploy.example.com
+  name: deploysyncers.apps.example.com
 spec:
-  group: deploy.example.com
+  group: apps.example.com
   names:
     kind: DeploySyncer
     listKind: DeploySyncerList
@@ -37,21 +37,18 @@ spec:
           metadata:
             type: object
           spec:
+            description: DeploySyncerSpec defines the desired state of DeploySyncer.
             properties:
-              branch:
-                description: Branch is the Git branch to sync from
+              RawFileUrl:
+                description: RawFileUrl is the GitHub repository URL
                 type: string
               intervalSeconds:
                 description: IntervalSeconds is the sync interval in seconds
                 format: int32
                 type: integer
-              repoURL:
-                description: RepoURL is the GitHub repository URL
-                type: string
             required:
-            - branch
+            - RawFileUrl
             - intervalSeconds
-            - repoURL
             type: object
           status:
             properties:

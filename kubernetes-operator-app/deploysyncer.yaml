@@ -1,8 +1,8 @@
 apiVersion: deploy.example.com/v1alpha1
 kind: DeploySyncer
 metadata:
-  name: example-deploysyncer
-  namespace: default
+  name: nginx-deploysyncer
+  namespace: deploysyncer-operator-system
 spec:
   branch: main
   intervalSeconds: 3600

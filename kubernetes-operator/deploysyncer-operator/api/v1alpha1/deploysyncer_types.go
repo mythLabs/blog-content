@@ -23,11 +23,10 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+// DeploySyncerSpec defines the desired state of DeploySyncer.
 type DeploySyncerSpec struct {
-    // RepoURL is the GitHub repository URL
-    RepoURL string `json:"repoURL"`
-    // Branch is the Git branch to sync from
-    Branch string `json:"branch"`
+    // RawFileUrl is the GitHub repository URL
+    RawFileUrl string `json:"RawFileUrl"`
     // IntervalSeconds is the sync interval in seconds
     IntervalSeconds int32 `json:"intervalSeconds"`
 }

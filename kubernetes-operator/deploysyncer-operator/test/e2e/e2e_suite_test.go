@@ -25,7 +25,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"github.com/mythLabs/blog-content/tree/main/kubernetes-operator/deploysyncer-operator/test/utils"
+	"github.com/mythLabs/blog-content/tree/main/kubernetes-operator/test/utils"
 )
 
 var (

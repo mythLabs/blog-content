@@ -27,7 +27,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	deployv1alpha1 "github.com/mythLabs/blog-content/tree/main/kubernetes-operator/deploysyncer-operator/api/v1alpha1"
+	appsv1alpha1 "github.com/mythLabs/blog-content/tree/main/kubernetes-operator/api/v1alpha1"
 )
 
 var _ = Describe("DeploySyncer Controller", func() {
@@ -40,13 +40,13 @@ var _ = Describe("DeploySyncer Controller", func() {
 			Name:      resourceName,
 			Namespace: "default", // TODO(user):Modify as needed
 		}
-		deploysyncer := &deployv1alpha1.DeploySyncer{}
+		deploysyncer := &appsv1alpha1.DeploySyncer{}
 
 		BeforeEach(func() {
 			By("creating the custom resource for the Kind DeploySyncer")
 			err := k8sClient.Get(ctx, typeNamespacedName, deploysyncer)
 			if err != nil && errors.IsNotFound(err) {
-				resource := &deployv1alpha1.DeploySyncer{
+				resource := &appsv1alpha1.DeploySyncer{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      resourceName,
 						Namespace: "default",
@@ -59,7 +59,7 @@ var _ = Describe("DeploySyncer Controller", func() {
 
 		AfterEach(func() {
 			// TODO(user): Cleanup logic after each test, like removing the resource instance.
-			resource := &deployv1alpha1.DeploySyncer{}
+			resource := &appsv1alpha1.DeploySyncer{}
 			err := k8sClient.Get(ctx, typeNamespacedName, resource)
 			Expect(err).NotTo(HaveOccurred())
 
