@@ -23,25 +23,20 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// DeploySyncerSpec defines the desired state of DeploySyncer.
 type DeploySyncerSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// GitHub repository URL where the deployments.yaml file is located
-	RepoURL string `json:"repoURL,omitempty"`
-	// GitHub branch or tag
-	Branch string `json:"branch,omitempty"`
-	// Interval in seconds to check the deployments.yaml file
-	CheckInterval int `json:"checkInterval,omitempty"`
+    // RepoURL is the GitHub repository URL
+    RepoURL string `json:"repoURL"`
+    // Branch is the Git branch to sync from
+    Branch string `json:"branch"`
+    // IntervalSeconds is the sync interval in seconds
+    IntervalSeconds int32 `json:"intervalSeconds"`
 }
 
-// DeploySyncerStatus defines the observed state of DeploySyncer.
 type DeploySyncerStatus struct {
-	// Last time the deployment.yaml was applied
-	LastAppliedTime metav1.Time `json:"lastAppliedTime,omitempty"`
-	// Last status of the deployment operation
-	LastStatus string `json:"lastStatus,omitempty"`
+    // LastStatus shows the last sync status
+    LastStatus string `json:"lastStatus"`
+    // LastSyncTime shows when the last sync occurred
+    LastSyncTime string `json:"lastSyncTime"`
 }
 
 // +kubebuilder:object:root=true
