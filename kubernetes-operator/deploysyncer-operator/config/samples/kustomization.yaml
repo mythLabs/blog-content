@@ -1,4 +1,0 @@
-## Append samples of your project ##
-resources:
-- apps_v1alpha1_deploysyncer.yaml
-# +kubebuilder:scaffold:manifestskustomizesamples
