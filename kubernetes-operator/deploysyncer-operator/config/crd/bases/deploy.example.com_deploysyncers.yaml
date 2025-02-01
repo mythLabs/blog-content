@@ -37,29 +37,33 @@ spec:
           metadata:
             type: object
           spec:
-            description: DeploySyncerSpec defines the desired state of DeploySyncer.
             properties:
               branch:
-                description: GitHub branch or tag
+                description: Branch is the Git branch to sync from
                 type: string
-              checkInterval:
-                description: Interval in seconds to check the deployments.yaml file
+              intervalSeconds:
+                description: IntervalSeconds is the sync interval in seconds
+                format: int32
                 type: integer
               repoURL:
-                description: GitHub repository URL where the deployments.yaml file
-                  is located
+                description: RepoURL is the GitHub repository URL
                 type: string
+            required:
+            - branch
+            - intervalSeconds
+            - repoURL
             type: object
           status:
-            description: DeploySyncerStatus defines the observed state of DeploySyncer.
             properties:
-              lastAppliedTime:
-                description: Last time the deployment.yaml was applied
-                format: date-time
-                type: string
               lastStatus:
-                description: Last status of the deployment operation
+                description: LastStatus shows the last sync status
                 type: string
+              lastSyncTime:
+                description: LastSyncTime shows when the last sync occurred
+                type: string
+            required:
+            - lastStatus
+            - lastSyncTime
             type: object
         type: object
     served: true
