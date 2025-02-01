@@ -10,7 +10,6 @@ import (
     "k8s.io/apimachinery/pkg/runtime"
     ctrl "sigs.k8s.io/controller-runtime"
     "sigs.k8s.io/controller-runtime/pkg/client"
-    "sigs.k8s.io/controller-runtime/pkg/log"
     "sigs.k8s.io/yaml"
 
     deploysyncerv1alpha1 "github.com/mythLabs/blog-content/tree/main/kubernetes-operator/deploysyncer-operator/api/v1alpha1"
@@ -22,10 +21,9 @@ type DeploySyncerReconciler struct {
 }
 
 func (r *DeploySyncerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-    logger := log.FromContext(ctx)
     
     deploySyncer := &deploysyncerv1alpha1.DeploySyncer{}
-    if err := r.Get(ctx, req.NamespacedName, deploySyncer); err != nil {
+    if err := r.Get(ctx, req.Namespace, deploySyncer); err != nil {
         return ctrl.Result{}, client.IgnoreNotFound(err)
     }
 
@@ -37,13 +35,13 @@ func (r *DeploySyncerReconciler) Reconcile(ctx context.Context, req ctrl.Request
     }
 
     // Setup GitHub client
-    client := resty.New()
+    rustyClient := resty.New()
     deploymentURL := fmt.Sprintf("%s/%s/kubernetes-operator-app/deployments.yaml", 
         deploySyncer.Spec.RepoURL,
         deploySyncer.Spec.Branch)
 
     // Fetch deployment
-    resp, err := client.R().Get(deploymentURL)
+    resp, err := rustyClient.R().Get(deploymentURL)
     if err != nil {
         deploySyncer.Status.LastStatus = fmt.Sprintf("Failed to fetch: %v", err)
         r.Status().Update(ctx, deploySyncer)

@@ -1,0 +1,10 @@
+apiVersion: deploy.example.com/v1alpha1
+kind: DeploySyncer
+metadata:
+  name: example-deploysyncer
+  namespace: default
+spec:
+  branch: main
+  intervalSeconds: 3600
+  repoURL: https://raw.githubusercontent.com/mythLabs/blog-content
+
