@@ -1,10 +1,9 @@
-apiVersion: deploy.example.com/v1alpha1
+apiVersion: apps.example.com/v1alpha1
 kind: DeploySyncer
 metadata:
   name: nginx-deploysyncer
   namespace: deploysyncer-operator-system
 spec:
-  branch: main
   intervalSeconds: 3600
-  repoURL: https://raw.githubusercontent.com/mythLabs/blog-content
+  RawFileUrl: https://raw.githubusercontent.com/mythLabs/blog-content/refs/heads/main/kubernetes-operator-app/deployments.yaml
 
