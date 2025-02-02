@@ -38,7 +38,7 @@ func (r *DeploySyncerReconciler) Reconcile(ctx context.Context, req ctrl.Request
     rustyClient := resty.New()
 
     // Fetch deployment
-    resp, err := rustyClient.R().Get(deploySyncer.Spec.RepoURL)
+    resp, err := rustyClient.R().Get(deploySyncer.Spec.RawFileUrl)
     if err != nil {
         deploySyncer.Status.LastStatus = fmt.Sprintf("Failed to fetch: %v", err)
         r.Status().Update(ctx, deploySyncer)

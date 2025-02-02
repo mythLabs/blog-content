@@ -13,7 +13,7 @@ resources:
     namespaced: true
   controller: true
   domain: example.com
-  group: deploy
+  group: apps
   kind: DeploySyncer
   path: github.com/mythLabs/blog-content/tree/main/kubernetes-operator/deploysyncer-operator/api/v1alpha1
   version: v1alpha1

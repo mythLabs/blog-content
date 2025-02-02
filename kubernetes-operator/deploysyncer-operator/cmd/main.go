@@ -37,7 +37,7 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	deployv1alpha1 "github.com/mythLabs/blog-content/tree/main/kubernetes-operator/deploysyncer-operator/api/v1alpha1"
+	appsv1alpha1 "github.com/mythLabs/blog-content/tree/main/kubernetes-operator/deploysyncer-operator/api/v1alpha1"
 	"github.com/mythLabs/blog-content/tree/main/kubernetes-operator/deploysyncer-operator/internal/controller"
 	// +kubebuilder:scaffold:imports
 )
@@ -50,7 +50,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(deployv1alpha1.AddToScheme(scheme))
+	utilruntime.Must(appsv1alpha1.AddToScheme(scheme))
 	// +kubebuilder:scaffold:scheme
 }
 

@@ -1,7 +1,7 @@
 # This rule is not used by the project deploysyncer-operator itself.
 # It is provided to allow the cluster admin to help manage permissions for users.
 #
-# Grants read-only access to deploy.example.com resources.
+# Grants read-only access to apps.example.com resources.
 # This role is intended for users who need visibility into these resources
 # without permissions to modify them. It is ideal for monitoring purposes and limited-access viewing.
 
@@ -14,7 +14,7 @@ metadata:
   name: deploysyncer-viewer-role
 rules:
 - apiGroups:
-  - deploy.example.com
+  - apps.example.com
   resources:
   - deploysyncers
   verbs:
@@ -22,7 +22,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - deploy.example.com
+  - apps.example.com
   resources:
   - deploysyncers/status
   verbs:

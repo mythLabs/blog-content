@@ -1,4 +1,4 @@
-apiVersion: deploy.example.com/v1alpha1
+apiVersion: apps.example.com/v1alpha1
 kind: DeploySyncer
 metadata:
   labels:

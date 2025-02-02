@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.0
-  name: deploysyncers.deploy.example.com
+  name: deploysyncers.apps.example.com
 spec:
-  group: deploy.example.com
+  group: apps.example.com
   names:
     kind: DeploySyncer
     listKind: DeploySyncerList
@@ -37,6 +37,7 @@ spec:
           metadata:
             type: object
           spec:
+            description: DeploySyncerSpec defines the desired state of DeploySyncer.
             properties:
               RawFileUrl:
                 description: RawFileUrl is the GitHub repository URL
