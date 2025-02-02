@@ -4,6 +4,6 @@ metadata:
   name: nginx-deploysyncer
   namespace: deploysyncer-operator-system
 spec:
-  intervalSeconds: 3600
+  intervalSeconds: 60
   RawFileUrl: https://raw.githubusercontent.com/mythLabs/blog-content/refs/heads/main/kubernetes-operator-app/deployments.yaml
 
